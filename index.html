@@ -2,40 +2,181 @@
 <html lang="hu">
 <head>
 	<meta charset="UTF-8">
-	<title>Szolfézs gyakorló</title>
+	<title>SzolfezsGyakorlo</title>
+	<style>
+		/*Elrejtjük a játékoldalt*/
+		.oldal-tartalom {
+			display: none;
+		}
+		
+		/*Gombok formázása*/
+		.valaszto-gomb {
+			padding: 15px 30px;
+			font-size: 18ps;
+			font-weight: bold;
+			color: white;
+			border: none;
+			margin: 15px;
+			cursor: pointer;
+			border-radius: 8px;
+			transition: background-color 0.2s, transform 0.1s;
+		}
+		
+		#gomb-A {background-color: #2ecc71; } /*Zöld*/
+		#gomb-B {background-color: #e74c3c; } /*piros*/
+		
+		/*Egér effekt*/
+		.valaszto-gomb:hover {
+			transform: scale(1.05);
+			filter: brightness(1.1);
+		}
+		
+		/* Vissza gomb stílusa*/
+		.vissza-gomb {
+			margin-top: 30px;
+			padding: 10px 20px;
+			background-color: #7f8c8d;
+			color: white;
+			border: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+		.vissza-gomb:hover {background-color: #95a5a6;}
+		
+		/*időbélyeg doboz stílusa */
+		.idobelyeg-doboz {
+			margin-top: 15px;
+			font-syle: italic;
+			color: #555;
+			font-weight: bold;
+		}
+	
+	</style>
 </head>
-
 <body>
 
-<h1>Szolfézs gyakorló</h1>
-<h2>Tercépítés 1</h2>
-<h3 id="allapot" type="text"></h3>
-<h2 id="kerdes"></h2>
+	<!--1.LÉPÉS: a választó menü a feliratos gombokkal -->
+	<div id="valaszto-kepernyo" style="text-align: denter; mrgin-top: 80px";>
+		<h1>Válassz nehézségi szintet!</h1>
+		
+		<!-- Itt adhatod meg a gombok feliratát közvetlenül -->
+		<button id="gomb-A" class="valaszto-gomb" data-target="oldal-A">Tercek_1</button>
+		<button id="gomb-B" class="valaszto-gomb" data-target="oldal-B">Tercek_2</button>
+	</div>
+	
+	<!--2. LÉPÉS: Az "A" oldal tartalma -->
+	<div id="oldal-A" class="oldal-tartalom">
+		<h2>Könnyű feladatok elindítva</h2>
+		<h3 id="allapot" type="text"></h3>
+		<h2 id="kerdes"></h2>
 
-<input id="valasz" type="text" autocomplete="off">
+		<input id="valasz" type="text" autocomplete="off">
 
-<button onclick="hangok('H')">H</button>
-<button onclick="hangok('C')">C</button>
-<button onclick="hangok('D')">D</button>
-<button onclick="hangok('E')">E</button>
-<button onclick="hangok('F')">F</button>
-<button onclick="hangok('G')">G</button>
-<button onclick="hangok('A')">A</button>
-<button onclick="hangok('H')">H</button>
-<button onclick="hangok('C')">C</button>
-<button onclick="hangok('D')">D</button>
-<button onclick="hangok('#')">#</button>
-<button onclick="hangok('b')">b</button>
+		<button onclick="hangok('H')">H</button>
+		<button onclick="hangok('C')">C</button>
+		<button onclick="hangok('D')">D</button>
+		<button onclick="hangok('E')">E</button>
+		<button onclick="hangok('F')">F</button>
+		<button onclick="hangok('G')">G</button>
+		<button onclick="hangok('A')">A</button>
+		<button onclick="hangok('H')">H</button>
+		<button onclick="hangok('C')">C</button>
+		<button onclick="hangok('D')">D</button>
+		<button onclick="hangok('#')">#</button>
+		<button onclick="hangok('b')">b</button>
+		<p id="eredmeny"></p>
 
+		<button onclick="ujJatek()">Új játék</button>
+		<button onclick="megszakit()">Megszakítás</button>
 
+		<script src="script.js"></script>
+		<button class="kesz-gomb" onclick="feladatKesz('oldal-A')">Feladat befejezése</button>
+		<div id="idobelyeg-oldal-A" class="idobelyeg-doboz"></div>
+		
+		<br>
+		<button class="vissza-gomb">Vissza a választáshoz</button>
+	</div>
+	
+	<!--3. LÉPÉS: a "B" oldal tartalma-->
+	<div id="oldal-B" class="oldal-tartalom">
+		<h2>Nehéz feladatok elindítva</h2>
+		<h3 id="allapot" type="text"></h3>
+		<h2 id="kerdes"></h2>
 
+		<input id="valasz" type="text" autocomplete="off">
 
-<p id="eredmeny"></p>
+		<button onclick="hangok('H')">?</button>
+		<button onclick="hangok('C')">C</button>
+		<button onclick="hangok('D')">?</button>
+		<button onclick="hangok('E')">?</button>
+		<button onclick="hangok('F')">?</button>
+		<button onclick="hangok('G')">G</button>
+		<button onclick="hangok('A')">?</button>
+		<button onclick="hangok('H')">?</button>
+		<button onclick="hangok('C')">C</button>
+		<button onclick="hangok('D')">?</button>
+		<button onclick="hangok('#')">#</button>
+		<button onclick="hangok('b')">b</button>
+		<p id="eredmeny"></p>
 
-<button onclick="ujJatek()">Új játék</button>
-<button onclick="megszakit()">Megszakítás</button>
+		<button onclick="ujJatek()">Új játék</button>
+		<button onclick="megszakit()">Megszakítás</button>
 
-<script src="script.js"></script>
+		<script src="script.js"></script>
+		<button class="kesz-gomb" onclick="feladatKesz('oldal-B')">Feladat befejezése</button>
+		<div id="idobelyeg-oldal-B" class="idobelyeg-doboz"></div>
+		
+		<br>
+		<button class="vissza-gomb">Vissza a válsaztáshoz</button>
+	</div>
+	
+	<script>
+		//Kijelöljük a feliratos gombokat
+		const gombok = document.querySelectorAll('.valaszto-gomb');
+		const visszaGombok = document.querySelectorAll('.vissza-gomb');
+		
+		//Szint kiválasztása
+		gombok.forEach(gomb => {
+			gomb.addEventListener('click', (esemeny) => {
+				//Kiolvassuk, melyik oldalt kell megjeleníteni
+				const celOldalId = esemeny.target.dataset.target;
+				
+				//eltuntetjük a menüt
+				document.getElementById('valaszto-kepernyo').style.display = 'none';
+				
+				//megjelenítjük a választott felületet
+				document.getElementById(celOldalId).style.display = 'block';
+			});
+		});
+		
+		//Visszalépés a főmenübe
+		visszaGombok.forEach(gomb => {
+			gomb.addEventListener('click', () => {
+				//Elrejtjuk az összes játékoldalt
+				document.querySelectorAll('.oldal-tartalom').forEach(oldal => {
+					oldal.style.display = 'none';
+				});
+				//megjelenítjük a választóoldalt
+				document.getElementById('valaszto-kepernyo').style.display = 'block';
+			});
+		});
+		
+		//Időbélyeg generáló függvény
+		function feladatKesz(oldalId) {
+			const most = new Date();
+			
+			//Formázás: ÉÉÉÉ.MM.DD: ÓÓ:PP:MP
+			const datumSzoveg = most.getFullYear() + '.' +
+						String(most.getMonth() +1).padStart(2, '0') + '.' +
+						String(most.getDate()).padStart(2, '0') + '.' +
+						String(most.getHours()).padStart(2, '0') + ':' +
+						String(most.getMinutes()).padStart(2, '0') + ':' +
+						String(most.getSeconds()).padStart(2, '0');
+				
+			//Beillestzés a megfelelő oldal időbélyeg dobozába
+			document.getElementById('idobelyeg-' + oldalId).innerText = "Elkészült: " + datumSzoveg;
+		}
+	</script>
 
 </body>
 </html>
